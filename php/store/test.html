@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Navbar Dropdown</title>
+  <style>
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 30px;
+      background-color: #fff;
+      border-bottom: 1px solid #ddd;
+    }
+    .logo {
+      font-size: 24px;
+      font-weight: bold;
+      color: #333;
+    }
+    .navbar {
+      list-style: none;
+      display: flex;
+      gap: 20px;
+    }
+    .navbar li {
+      position: relative;
+    }
+    .navbar a {
+      text-decoration: none;
+      color: #1a1a8e;
+      font-weight: bold;
+      padding: 8px 12px;
+    }
+    .navbar a:hover {
+      color: #FFA500;
+      border-bottom: 2px solid #FFA500;
+    }
+    .dropdown-menu {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      background: #fff;
+      list-style: none;
+      padding: 10px 0;
+      margin: 0;
+      display: none;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      border-radius: 5px;
+      z-index: 999;
+    }
+    .dropdown-menu li a {
+      display: block;
+      padding: 10px 20px;
+      white-space: nowrap;
+      color: #333;
+    }
+    .dropdown-menu li a:hover {
+      background-color: #f0f0f0;
+    }
+    .dropdown.open .dropdown-menu {
+      display: block;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo">MySite</div>
+    <nav>
+      <ul class="navbar">
+        <li><a href="#">Home</a></li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle">Services ▾</a>
+          <ul class="dropdown-menu">
+            <li><a href="#">Web Development</a></li>
+            <li><a href="#">Design</a></li>
+            <li><a href="#">Marketing</a></li>
+          </ul>
+        </li>
+        <li><a href="#">About</a></li>
+        <li><a href="#">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const toggles = document.querySelectorAll('.dropdown-toggle');
+
+      toggles.forEach(toggle => {
+        toggle.addEventListener('click', function (e) {
+          e.preventDefault();
+          const parent = this.parentElement;
+          parent.classList.toggle('open');
+
+          document.querySelectorAll('.dropdown').forEach(drop => {
+            if (drop !== parent) drop.classList.remove('open');
+          });
+        });
+      });
+
+      document.addEventListener('click', function (e) {
+        if (!e.target.closest('.dropdown')) {
+          document.querySelectorAll('.dropdown').forEach(drop => drop.classList.remove('open'));
+        }
+      });
+    });
+  </script>
+</body>
+</html>
